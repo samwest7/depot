@@ -1,8 +1,18 @@
 class Product < ActiveRecord::Base
   default_scope :order => 'title'
   has_many :line_items
+  attr_accessible :image_url, :description, :price, :title
 
   before_destroy :ensure_not_referenced_by_any_line_item
+
+  def ensure_not_referenced_by_any_line_item
+    if line_items.empty?
+      return true
+    else
+      errors.add(:base, 'Line Items present')
+      return false
+    end
+  end
 
   attr_accessible :title, :description, :image_url, :price
   validates :title, :description, :image_url, :presence => true
@@ -13,12 +23,5 @@ class Product < ActiveRecord::Base
     :message => 'must be a URL for a GIF, JPG, or PNG image.'
   }
 
-  def ensure_not_referenced_by_any_line_item
-    if line_items.count.zero?
-      return true
-    else
-      errors.add(:base, 'Line Items present')
-      return false
-    end
-  end
+
 end
