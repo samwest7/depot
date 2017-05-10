@@ -13,7 +13,10 @@
 <div id="columns">
 <div id="side">
     <div id="cart">
-      <%= render @cart %>
+      <% if @cart %>
+        <%= render @cart %>
+        <%= javascript_include_tag "application", "data-turbolinks-track" => true %>
+      <% end %>
     </div>
 <a href="http://www....">Home</a><br />
 <a href="http://www..../faq">Questions</a><br /> <a href="http://www..../news">News</a><br />
