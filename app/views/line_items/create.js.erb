@@ -1,5 +1,5 @@
 //page.replace_html('cart', render(@cart))
-$('#cart').html("<%= escape_javascript render(@cart) %>");
+//$('#cart').html("<%= escape_javascript render(@cart) %>");
 //page.replace_html('cart', render(@cart))
 //page[:current_item].visual_effect :highlight,
 //:startcolor => "#88ff88",
@@ -13,12 +13,14 @@ $('#cart').html("<%= escape_javascript render(@cart) %>");
 
 
 //#START_HIGHLIGHT
-$('#notice').hide();
+
+$("#notice").hide();
+$("#cart").html("<%= j render(@cart) %>");
 
 //#END_HIGHLIGHT
 if ($('#cart tr').length == 1) { $('#cart').show('blind', 1000); }
 
 $('#cart').html("<%= escape_javascript render(@cart) %>");
 
-$('#current_item').css({'background-color':'#8a3f88'}).animate({'background-color':'#134461'}, 1000);
+$('#current_item').css({'background-color':'#88ff88'}).animate({'background-color':'#114411'}, 1000);
 //$('#current_item').css({'background-color':'#134461'})

@@ -7,6 +7,7 @@ class ProductsController < ApplicationController
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @products }
+      format.xml  { render :xml => @products }
     end
   end
 
@@ -18,6 +19,7 @@ class ProductsController < ApplicationController
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @product }
+      format.xml  { render :xml => @product }
     end
   end
 
@@ -29,6 +31,7 @@ class ProductsController < ApplicationController
     respond_to do |format|
       format.html # new.html.erb
       format.json { render json: @product }
+      format.xml  { render :xml => @product }
     end
   end
 
@@ -46,9 +49,11 @@ class ProductsController < ApplicationController
       if @product.save
         format.html { redirect_to @product, notice: 'Product was successfully created.' }
         format.json { render json: @product, status: :created, location: @product }
+        format.xml  { render :xml => @product, :status => :created, :location => @product }
       else
         format.html { render action: "new" }
         format.json { render json: @product.errors, status: :unprocessable_entity }
+        format.xml  { render :xml => @product.errors, :status => :unprocessable_entity }
       end
     end
   end
@@ -62,9 +67,11 @@ class ProductsController < ApplicationController
       if @product.update_attributes(params[:product])
         format.html { redirect_to @product, notice: 'Product was successfully updated.' }
         format.json { head :no_content }
+        format.xml  { head :ok }
       else
         format.html { render action: "edit" }
         format.json { render json: @product.errors, status: :unprocessable_entity }
+        format.xml  { render :xml => @product.errors, :status => :unprocessable_entity }
       end
     end
   end
@@ -78,6 +85,15 @@ class ProductsController < ApplicationController
     respond_to do |format|
       format.html { redirect_to products_url }
       format.json { head :no_content }
+      format.xml  { head :ok }
+    end
+  end
+
+  def who_bought
+    @product = Product.find(params[:id])
+    respond_to do |format|
+      format.atom
+      format.xml { render :xml => @product }
     end
   end
 end
