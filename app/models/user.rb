@@ -2,6 +2,7 @@ require 'digest/sha2'
 
 class User < ActiveRecord::Base
   attr_accessible :name, :password_confirmation, :password
+  after_destroy :ensure_an_admin_remains
 
   validates :name, :presence => true, :uniqueness => true
   attr_accessor :password_confirmation
@@ -21,7 +22,11 @@ class User < ActiveRecord::Base
     Digest::SHA2.hexdigest(password + "wibble" + salt)
   end
 
-
+  def ensure_an_admin_remains
+    if User.count.zero?
+      raise "Can't delete last user"
+    end
+  end
 
   def password=(password)
     @password = password
